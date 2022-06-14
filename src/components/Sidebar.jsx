@@ -8,7 +8,7 @@ import { links } from '../data/dummy';
 import { useStateContext } from '../contexts/ContextProvider';
 
 const Sidebar = () => {
-  const { activeMenu, setActiveMenu, screenSize } = useStateContext();
+  const { activeMenu, setActiveMenu, screenSize, currentColor } = useStateContext();
 
   const handleCloseSideBar = () => {
     if(activeMenu && screenSize <= 900) {
@@ -24,7 +24,7 @@ const Sidebar = () => {
       {activeMenu && (<>
         <div className="flex justify-between items-center">
           <Link to="/" onClick={handleCloseSideBar} className="items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight dark:text-white text-slate-900">
-            <SiShopware /><span>Shoppy</span>
+            <SiShopware /><span>ExcessIndustries</span>
           </Link>
           <TooltipComponent content="Menu" position="BottomCenter">
             <button type="button" onClick={() => setActiveMenu((prevActiveMenu) => !prevActiveMenu)} className="text-xl rounded-full p-3 hover:bg-light-gray mt-4 block md:hidden">
@@ -39,7 +39,17 @@ const Sidebar = () => {
                 {item.title}
               </p>
               {item.links.map((Link) => (
-                <NavLink to={`/${Link.name}`} key={Link.name} onClick={handleCloseSideBar} className={({ isActive }) => isActive ? activeLink : normalLink }>
+                <NavLink 
+                  to={`/${Link.name}`} 
+                  key={Link.name} 
+                  onClick={handleCloseSideBar}
+                  style={({ isActive }) => ({
+                    backgroundColor: isActive ? 
+                    currentColor: ''
+                  })} 
+                  className={({ isActive }) => isActive ? activeLink : normalLink }
+                
+                >
                   {Link.icon}
                   <span className="capitalize">
                     {Link.name}
